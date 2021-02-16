@@ -5,11 +5,13 @@ import Station from 'App/Models/Station'
 
 export default class RecordsController {
   public async store({ req, res }) {
+    const station = await Station.findByOrFail('secure_id', req.params.secure_id)
+
     const data = req.all()
 
     const record = new Record()
 
-    record.merge(data)
+    record.merge({ ...data, station_id: station.id })
 
     await record.save()
 
@@ -17,6 +19,8 @@ export default class RecordsController {
   }
 
   public async show({ req, res }) {
+    const data = req.all()
+
     const station = await Station.findByOrFail('secure_id', req.params.secure_id)
 
     const records = await Record.query().where('station_id', station.id)

@@ -5,7 +5,18 @@ export default class StationsController {
   public async index({ req, res }) {
     const stations = await Station.query()
 
-    return res.status(200).json({ data: stations })
+    const data = stations.map((station) => {
+      return {
+        name: station.name,
+        city: station.city,
+        uf: station.uf,
+        latitude: station.latitude,
+        longitude: station.longitude,
+        secure_id: station.secure_id,
+      }
+    })
+
+    return res.status(200).json({ data })
   }
 
   public async store({ req, res }) {
@@ -14,7 +25,7 @@ export default class StationsController {
     const station = new Station()
     station.merge(data)
 
-    console.log(data)
+    // console.log(data)
 
     await station.save()
 

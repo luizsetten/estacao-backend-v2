@@ -23,6 +23,7 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.group(() => {
   Route.get('/', 'StationsController.index')
   Route.post('/', 'StationsController.store')
+  Route.put('/', 'StationsController.update')
 }).prefix('/stations')
 
 Route.get('/', async () => {
