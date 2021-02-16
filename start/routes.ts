@@ -26,10 +26,11 @@ Route.group(() => {
   Route.put('/', 'StationsController.update')
 }).prefix('/stations')
 
+Route.group(() => {
+  Route.post('/', 'RecordsController.store')
+  Route.get('/:station_secure_id', 'RecordsController.show')
+}).prefix('/records')
+
 Route.get('/', async () => {
   return { healthCheck: 'OK' }
 })
-
-// Route.get('/:station', async () => {
-//   return { hello: 'world' }
-// })
