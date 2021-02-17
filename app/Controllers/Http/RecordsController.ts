@@ -4,10 +4,10 @@ import Record from 'App/Models/Record'
 import Station from 'App/Models/Station'
 
 export default class RecordsController {
-  public async store({ req, res }) {
-    const station = await Station.findByOrFail('secure_id', req.params.secure_id)
+  public async store({ request, response }) {
+    const data = request.all()
 
-    const data = req.all()
+    const station = await Station.findByOrFail('secure_id', data.station_id)
 
     const record = new Record()
 
@@ -15,17 +15,17 @@ export default class RecordsController {
 
     await record.save()
 
-    return res.status(200).json(record)
+    return response.status(200).json(record)
   }
 
-  public async show({ req, res }) {
-    const data = req.all()
+  public async show({ request, response }) {
+    // const data = request.all()
 
-    const station = await Station.findByOrFail('secure_id', req.params.secure_id)
+    const station = await Station.findByOrFail('secure_id', request.params().station_secure_id)
 
     const records = await Record.query().where('station_id', station.id)
     //.whereBetween('create_at', ['start_date', 'end_date'])
 
-    res.status(200).json(records)
+    response.status(200).json(records)
   }
 }

@@ -28,9 +28,7 @@ export default class Station extends BaseModel {
   @column()
   public longitude: string
 
-  @column({
-    prepare: (value: number) => Encryption.encrypt(value), // funcionou hahahaah
-  })
+  @column()
   public secure_id: string
 
   @column.dateTime({ autoCreate: true })

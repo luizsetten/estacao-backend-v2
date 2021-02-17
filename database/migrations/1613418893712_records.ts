@@ -5,8 +5,8 @@ export default class Records extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.float('temp')
+      table.increments('id').notNullable()
+      table.float('temperature')
       table.float('pressure')
       table.float('humidity')
       table.float('rainfall')
@@ -14,7 +14,7 @@ export default class Records extends BaseSchema {
       table.float('wind_speed')
       table.float('wind_direction')
       table.float('solar_incidence')
-      table.integer('station_id').unsigned().references('id').inTable('stations')
+      table.integer('station_id').unsigned().references('id').inTable('stations').notNullable()
       table.timestamps(true)
     })
   }

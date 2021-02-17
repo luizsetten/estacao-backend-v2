@@ -1,8 +1,9 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Station from '../../Models/Station'
+import { v4 as uuidv4 } from 'uuid'
 
 export default class StationsController {
-  public async index({ req, res }) {
+  public async index({ request, response }) {
     const stations = await Station.query()
 
     const data = stations.map((station) => {
@@ -16,21 +17,21 @@ export default class StationsController {
       }
     })
 
-    return res.status(200).json({ data })
+    return response.status(200).json(data)
   }
 
-  public async store({ req, res }) {
-    const data = req.all()
+  public async store({ request, response }) {
+    const data = request.all()
 
     const station = new Station()
-    station.merge(data)
 
-    // console.log(data)
+    console.log(uuidv4())
+    station.merge({ ...data, secure_id: uuidv4() })
 
     await station.save()
 
     const stations = await Station.query()
 
-    return res.status(200).json({ data: stations })
+    return response.status(200).json(stations)
   }
 }
