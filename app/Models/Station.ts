@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
-import Encryption from '@ioc:Adonis/Core/Encryption'
 
 import Record from './Record'
 
