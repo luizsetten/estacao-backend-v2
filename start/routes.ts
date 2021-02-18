@@ -29,6 +29,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('/', 'RecordsController.store')
   Route.get('/:station_secure_id', 'RecordsController.show')
+  Route.get('/:station_secure_id/last', 'RecordsController.showOne')
 }).prefix('/records')
 
 Route.get('/', async () => {

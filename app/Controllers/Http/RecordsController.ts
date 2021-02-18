@@ -28,4 +28,18 @@ export default class RecordsController {
 
     response.status(200).json(records)
   }
+
+  public async showOne({ request, response }) {
+    // const data = request.all()
+
+    const station = await Station.findByOrFail('secure_id', request.params().station_secure_id)
+
+    const records = await Record.query()
+      .where('station_id', station.id)
+      .orderBy('created_at', 'desc')
+      .first()
+    //.whereBetween('create_at', ['start_date', 'end_date'])
+
+    response.status(200).json(records)
+  }
 }
