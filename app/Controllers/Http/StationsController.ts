@@ -25,7 +25,6 @@ export default class StationsController {
 
     const station = new Station()
 
-    console.log(uuidv4())
     station.merge({ ...data, secure_id: uuidv4() })
 
     await station.save()

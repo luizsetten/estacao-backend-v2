@@ -22,8 +22,8 @@ export default class RecordsController {
     // const data = request.all()
 
     const station = await Station.findByOrFail('secure_id', request.params().station_secure_id)
+    const records = await Record.query().where('station_id', station.id).limit(20)
 
-    const records = await Record.query().where('station_id', station.id)
     //.whereBetween('create_at', ['start_date', 'end_date'])
 
     response.status(200).json(records)
@@ -31,15 +31,18 @@ export default class RecordsController {
 
   public async showOne({ request, response }) {
     // const data = request.all()
+    try {
+      const station = await Station.findByOrFail('secure_id', request.params().station_secure_id)
 
-    const station = await Station.findByOrFail('secure_id', request.params().station_secure_id)
+      const records = await Record.query()
+        .where('station_id', station.id)
+        .orderBy('created_at', 'desc')
+        .first()
+      //.whereBetween('create_at', ['start_date', 'end_date'])
 
-    const records = await Record.query()
-      .where('station_id', station.id)
-      .orderBy('created_at', 'desc')
-      .first()
-    //.whereBetween('create_at', ['start_date', 'end_date'])
-
-    response.status(200).json(records)
+      response.status(200).json(records)
+    } catch (e) {
+      response.status(500).json({ error: 'Houve um erro' })
+    }
   }
 }
