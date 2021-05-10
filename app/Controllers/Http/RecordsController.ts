@@ -5,17 +5,21 @@ import Station from 'App/Models/Station'
 
 export default class RecordsController {
   public async store({ request, response }) {
-    const data = request.all()
+    try {
+      const data = request.all()
 
-    const station = await Station.findByOrFail('secure_id', data.station_id)
+      const station = await Station.findByOrFail('secure_id', data.station_id)
 
-    const record = new Record()
+      const record = new Record()
 
-    record.merge({ ...data, station_id: station.id })
+      record.merge({ ...data, station_id: station.id })
 
-    await record.save()
+      await record.save()
 
-    return response.status(200).json(record)
+      return response.status(200).json(record)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   public async show({ request, response }) {

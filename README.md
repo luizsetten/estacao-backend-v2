@@ -40,3 +40,11 @@ Altere o arquivo `nginx.conf` dento da pasta `nginx-x.xx.x/conf` e inclua as seg
 > Essa alteração fará com que a api que está rodando em http://localhost:3333 fique disposivel no http://IP_DA_MAQUINA:80 permitindo assim a comunicação com diferentes dispositivos (Sejam eles microcontroladores ou computadores)
 
 > Não coloque a mesma porta que a api (atualmente 3333) está rodando para o NGINX listar (apenar coloque ela para redirecionar), utilize outra como foi no caso do exemplo (80)
+
+## Para rodar o projeto:
+
+- Inicie o banco de dados (postgres), seja ele um container ou o postgres diretamente instalado na maquina
+- Inicie o servidor do backend (`npm run dev`)
+- Inicie o Nginx (para expor a api)
+- Inicie o frontend (`npm start`)
+- Inicie o microcontrolador (Atualmente está sendo utilizado o PostHttpClient)
